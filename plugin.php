@@ -29,16 +29,7 @@ function register_graphql_create_payment_intent_mutation() {
             ],
         ],
         'mutateAndGetPayload' => function($input) {
-            $orderKey = !empty($input['orderKey']) ? sanitize_text_field($input['orderKey']) : null;
-
-            if (!$orderKey) {
-                throw new \GraphQL\Error\UserError('Invalid request: orderKey is required.');
-            }
-
-            $order_id = wc_get_order_id_by_order_key($orderKey);
-            if (!$order_id) {
-                throw new \GraphQL\Error\UserError('Order not found.');
-            }
+            $order_id = !empty($input['orderId']) ? sanitize_text_field($input['orderId']) : null;
 
             $order = wc_get_order($order_id);
             if (!$order) {
